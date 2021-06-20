@@ -1,0 +1,204 @@
+openapi: 3.0.0
+
+info:
+  title: Swagger for CUD API
+  description: This is the documentation for <Project Name>. On this site you can try all the endpoints and services.
+  license:
+    name: MIT
+  version: 1.0.0
+
+servers:
+  - url: "https://api-rcollect-app-ayehdcgmmq-uc.a.run.app/api/"
+
+paths:
+  "/version":
+    get:
+      tags:
+        - API CUD
+      summary: Get API version.
+      description: >
+        Get the API version.
+      operationId: getVersion
+      responses:
+        "200":
+          description: OK
+  "/cuds/haspickup/{nin}":
+    get:
+      tags:
+        - API CUD
+      summary: Checks if a client has any CUD for pickup.
+      description: >
+        Returns a boolean if a client has any CUD for pickup.
+      operationId: haspickup
+      parameters:
+        - in: path
+          name: nin
+          schema:
+            type: string
+          required: true
+          description: ID of the client.
+          example: 41603683
+      responses:
+        "200":
+          description: Reponse object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hasAny:
+                    type: boolean
+                    description: Indicates if a user has any CUD for pickup.
+        "404":
+          description: The app throws an exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/cuds/listbynin/{nin}":
+    get:
+      tags:
+        - API CUD
+      summary: List located CUDs associated to a client based on nin prop.
+      description: >
+        Returns a list of located CUDs associated to a client based on nin prop.
+      operationId: listbynin
+      parameters:
+        - in: path
+          name: nin
+          schema:
+            type: string
+          required: true
+          description: ID of the client.
+          example: 41603683
+      responses:
+        "200":
+          description: Reponse a list of CUD object
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CUD"
+        "404":
+          description: The app throws an exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    CUD:
+      type: object
+      properties:
+        codEst:
+          type: string
+        codMot:
+          type: string
+        customer:
+          type: object
+          properties:
+            email:
+              type: string
+            name:
+              type: string
+            nin:
+              type: string
+            phone:
+              type: string
+        descEst:
+          type: string
+        descMot:
+          type: string
+        dispatch:
+          type: object
+          properties:
+            bundle:
+              type: array
+              items:
+                type: string
+            deliveryDate:
+              type: string
+            ingressTime:
+              type: string
+            reservationDate:
+              type: string
+            storeId:
+              type: string
+        dispatchCustomer:
+          type: object
+          properties:
+            email:
+              type: string
+            name:
+              type: string
+            nin:
+              type: string
+            phone:
+              type: string
+            type:
+              type: integer
+        id:
+          type: string
+        jorDbo:
+          type: string
+        location:
+          type: string
+        metadata:
+          type: object
+          properties:
+            messageId:
+              type: string
+            pushTime:
+              type: string
+            updateTime:
+              type: string
+        orderId:
+          type: string
+        pickedAmount:
+          type: integer
+        pickedBy:
+          type: string
+        product:
+          type: object
+          properties:
+            brand:
+              type: string
+            color:
+              type: string
+            departmentCode:
+              type: string
+            departmentName:
+              type: string
+            description:
+              type: string
+            eandCode:
+              type: string
+            images:
+              type: array
+              items:
+                type: string
+            quantity:
+              type: integer
+            simpleDescription:
+              type: string
+            simpleDescriptionShort:
+              type: string
+            size:
+              type: string
+            stockBt:
+              type: integer
+            upcCode:
+              type: string
+        status:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
