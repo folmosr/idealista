@@ -1,3 +1,5 @@
+import { Console } from 'console';
+
 import { IPictureModel } from '../../application/queries/IPictureModel';
 import { AdTypeEnum } from '../enums/AdTypeEnum';
 import { wordCounter } from '../util/functions';
@@ -8,31 +10,55 @@ export class AdService implements IAdService {
     if (!description && description.length > 0) {
       return 0;
     }
+
+    /**
+     * by default
+     */
     let result = Number.parseInt(
       process.env.DESCRIPTION_DEFAULT_POINTS as string,
       10,
     );
+
     const wordsCount = wordCounter(description);
+    const keyWords = (process.env.KEY_WORDS as string).split(",");
+
+    /**
+     * checking tipology
+     */
     if (type == AdTypeEnum.FLAT) {
-      if (wordsCount >= 20 && wordsCount <= 49) {
+      if (wordsCount.count >= 20 && wordsCount.count <= 49) {
         result += Number.parseInt(
           process.env.FLAT_DESCRIPTION_MIN_POINTS as string,
           10,
         );
-      } else if (wordsCount >= 50) {
+      } else if (wordsCount.count >= 50) {
         result += Number.parseInt(
           process.env.FLAT_DESCRIPTION_MAX_POINTS as string,
           10,
         );
       }
-    } else if (type == AdTypeEnum.CHALET) {
-      if (wordsCount >= 50) {
+    }
+    if (type == AdTypeEnum.CHALET) {
+      if (wordsCount.count >= 50) {
         result += Number.parseInt(
           process.env.CHALET_DESCRIPTION_MAX_POINTS as string,
           10,
         );
       }
     }
+
+    /**
+     * checking key words
+     */
+    wordsCount.words.forEach((element) => {
+      if (keyWords.includes(element.toUpperCase())) {
+        result += Number.parseInt(
+          process.env.INCLUDE_KEYWORD_POINTS as string,
+          10,
+        );
+      }
+    });
+
     return result;
   }
 

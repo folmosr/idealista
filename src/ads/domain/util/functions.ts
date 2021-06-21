@@ -1,3 +1,5 @@
+import { IWordResult } from './interfaces/IWordReslt';
+
 function isWord(str: string): boolean {
   var alphaNumericFound = false;
   for (let i = 0; i < str.length; i++) {
@@ -14,7 +16,7 @@ function isWord(str: string): boolean {
   return alphaNumericFound;
 }
 
-export function wordCounter(text: string): number {
+export function wordCounter(text: string): IWordResult {
   var wordsArray = text.split(" ");
   var wordCount = 0;
   for (let i = 0; i < wordsArray.length; i++) {
@@ -23,5 +25,8 @@ export function wordCounter(text: string): number {
       wordCount++;
     }
   }
-  return wordCount;
+  return {
+    words: wordsArray,
+    count: wordCount,
+  } as IWordResult;
 }
