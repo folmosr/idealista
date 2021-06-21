@@ -26,7 +26,13 @@ export class AdFacade implements IAdFacade {
         item.description,
         item.typology,
       );
-
+      score += this._service.isCompleted(
+        item.typology,
+        item.description,
+        item.gardenSize ?? 0,
+        item.houseSize,
+        item.pictures.length,
+      );
       item.score = score;
     }
     return fs.writeFileSync("data/ads.json", JSON.stringify(ads));

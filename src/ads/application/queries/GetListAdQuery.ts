@@ -15,16 +15,10 @@ export class GetListAdQuery implements IGetListAdQuery {
       const model: IAdListModel = {
         description: doc.description,
         gardenSize: doc.gardenSize ?? 0,
-        pictures: doc.pictures.flatMap((picture) => {
-          return !Array.isArray(picture)
-            ? { url: picture.url, quality: picture.quality }
-            : [
-                ...picture.map((item) => ({
-                  url: item.url,
-                  quality: item.quality,
-                })),
-              ];
-        }),
+        pictures: doc.pictures.map((picture) => ({
+          url: picture.url,
+          quality: picture.quality,
+        })),
         typology: doc.typology,
         houseSize: doc.houseSize,
         score: doc.score,

@@ -14,4 +14,19 @@ export interface IAdService {
    * @param type tipo de anuncio
    */
   inspectDescription(description: string, type: string): number;
+  /**
+   * Verifica si el anuncio está completo basado en la tipología
+   * @param type
+   * @param description
+   * @param gardenSize
+   * @param houseSize
+   * @param pictureslength
+   */
+  isCompleted(
+    type: string,
+    description: string,
+    gardenSize: number,
+    houseSize: number,
+    pictureslength: number,
+  ): number;
 }

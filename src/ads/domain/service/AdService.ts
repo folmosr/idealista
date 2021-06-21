@@ -6,11 +6,40 @@ import { wordCounter } from '../util/functions';
 import { IAdService } from './IAdService';
 
 export class AdService implements IAdService {
+  isCompleted(
+    type: string,
+    description: string,
+    gardenSize: number,
+    houseSize: number,
+    pictureslength: number,
+  ): number {
+    let result = 0;
+    const { count } = wordCounter(description ?? "");
+    if (type === AdTypeEnum.FLAT) {
+      if (pictureslength > 0 && houseSize > 0 && count > 0) {
+        result = Number.parseInt(process.env.AD_COMPLETED_POINTS as string, 10);
+      }
+    }
+    if (type === AdTypeEnum.CHALET) {
+      if (pictureslength > 0 && houseSize > 0 && count > 0 && gardenSize > 0) {
+        result = Number.parseInt(process.env.AD_COMPLETED_POINTS as string, 10);
+      }
+    }
+    if (type === AdTypeEnum.GARAGE) {
+      if (pictureslength > 0 && houseSize > 0) {
+        result = Number.parseInt(process.env.AD_COMPLETED_POINTS as string, 10);
+      }
+    }
+    return result;
+  }
   inspectDescription(description: string, type: string): number {
-    if (!description && description.length > 0) {
+    const wordsCount = wordCounter(description ?? "");
+    const keyWords = (process.env.KEY_WORDS as string).split(",");
+    let counted: string[] = [];
+
+    if (!(wordsCount.count > 0)) {
       return 0;
     }
-
     /**
      * by default
      */
@@ -18,9 +47,6 @@ export class AdService implements IAdService {
       process.env.DESCRIPTION_DEFAULT_POINTS as string,
       10,
     );
-
-    const wordsCount = wordCounter(description);
-    const keyWords = (process.env.KEY_WORDS as string).split(",");
 
     /**
      * checking tipology
@@ -51,7 +77,9 @@ export class AdService implements IAdService {
      * checking key words
      */
     wordsCount.words.forEach((element) => {
-      if (keyWords.includes(element.toUpperCase())) {
+      let upper = element.toUpperCase();
+      if (keyWords.includes(upper) && !counted.includes(upper)) {
+        counted = [...counted, upper];
         result += Number.parseInt(
           process.env.INCLUDE_KEYWORD_POINTS as string,
           10,
