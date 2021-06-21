@@ -14,6 +14,10 @@ export class AdCalcullationController implements IBaseController {
   run = async (req: Request, res: Response): Promise<void> => {
     try {
       const ads = await this._getListAds.Execute();
+      log.info(
+        `Listado de Ads que pasan a la etapa de cálculo`,
+        Object.assign({}, { message: JSON.stringify(ads) }),
+      );
       res.status(httpStatus.OK).send(ads);
     } catch (error) {
       res.status(httpStatus.BAD_REQUEST).send(error);

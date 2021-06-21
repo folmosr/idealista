@@ -15,7 +15,7 @@ export class WinstonLogger {
 
   constructor() {
     const logLevel = process.env.NODE_ENV !== 'production' ? 'debug' : 'info';
-    const { combine, timestamp, colorize, printf } = format;
+    const { combine, timestamp, colorize, printf, json } = format;
     let customFormat;
     if (combine) {
       if (colorize) {
@@ -27,6 +27,7 @@ export class WinstonLogger {
               printf(
                 (info) => `${info.timestamp} ${info.level}: ${info.message}`,
               ),
+              json(),
             );
           }
         }
