@@ -1,8 +1,12 @@
 import { Router } from 'express';
 
+import { AdFacade } from '../../../../../ads/application/facades/AdFacade';
+import { IAdFacade } from '../../../../../ads/application/facades/IAdFacade';
 import { IAdRepository } from '../../../../../ads/application/interfaces/persistence/IAdRepository';
 import { GetListAdQuery } from '../../../../../ads/application/queries/GetListAdQuery';
 import { IGetListAdQuery } from '../../../../../ads/application/queries/IGetListAdQuery';
+import { AdService } from '../../../../../ads/domain/service/AdService';
+import { IAdService } from '../../../../../ads/domain/service/IAdService';
 import { AdRepository } from '../../../../../ads/persistence/AdRepository';
 import { AdCalcullationController } from '../../../../../ads/presentation/AdCalculationController';
 import { VersionHealth } from '../../../../../version';
@@ -15,16 +19,21 @@ export class Routes {
    * Calculation
    */
   private readonly _respository: IAdRepository = new AdRepository();
-  private readonly _adCalculationController: AdCalcullationController;
-  private readonly _getListAdQuery: IGetListAdQuery = new GetListAdQuery(
+  private readonly _getListAdsQuery: IGetListAdQuery = new GetListAdQuery(
     this._respository,
+  );
+  private readonly _adService: IAdService = new AdService();
+  private readonly _adCalculationController: AdCalcullationController;
+  private readonly _adFacade: IAdFacade = new AdFacade(
+    this._getListAdsQuery,
+    this._adService,
   );
 
   constructor() {
     this.router = Router();
     this.versionHealth = new VersionHealth();
     this._adCalculationController = new AdCalcullationController(
-      this._getListAdQuery,
+      this._adFacade,
     );
   }
 

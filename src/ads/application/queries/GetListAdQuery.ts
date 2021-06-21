@@ -9,7 +9,7 @@ export class GetListAdQuery implements IGetListAdQuery {
     this._repository = repository;
   }
 
-  async Execute(): Promise<readonly IAdListModel[]> {
+  async execute(): Promise<readonly IAdListModel[]> {
     const ads = await this._repository.getAll();
     return ads.map((doc: Ad) => {
       const model: IAdListModel = {

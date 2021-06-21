@@ -1,3 +1,4 @@
+import { IAdFacade } from 'ads/application/facades/IAdFacade';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
@@ -5,21 +6,20 @@ import { IBaseController } from '../../shared/infrastructure/controllers/IBaseCo
 import { IGetListAdQuery } from '../application/queries/IGetListAdQuery';
 
 export class AdCalcullationController implements IBaseController {
-  private readonly _getListAds: IGetListAdQuery;
+  private readonly _adFacade: IAdFacade;
 
-  constructor(getListAds: IGetListAdQuery) {
-    this._getListAds = getListAds;
+  constructor(adFacade: IAdFacade) {
+    this._adFacade = adFacade;
   }
 
   run = async (req: Request, res: Response): Promise<void> => {
     try {
-      const ads = await this._getListAds.Execute();
-      log.info(
-        `Listado de Ads que pasan a la etapa de cálculo`,
-        Object.assign({}, { message: JSON.stringify(ads) }),
-      );
-      res.status(httpStatus.OK).send(ads);
+      await this._adFacade.doCalculation();
+      res.status(httpStatus.OK).send({ response: `Ok` });
     } catch (error) {
+      log.error('Error crenaod archivo de cálculos', {
+        message: error.message,
+      });
       res.status(httpStatus.BAD_REQUEST).send(error);
     }
   };

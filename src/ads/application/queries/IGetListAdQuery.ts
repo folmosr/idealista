@@ -1,5 +1,5 @@
 import { IAdListModel } from './IAdListModel';
 
 export interface IGetListAdQuery {
-  Execute(): Promise<Readonly<Array<IAdListModel>>>;
+  execute(): Promise<Readonly<Array<IAdListModel>>>;
 }
