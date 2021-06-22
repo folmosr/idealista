@@ -30,6 +30,7 @@ FROM node:12.13.0-alpine AS production
 ENV APP_HOME /usr/src/app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
+COPY --from=builder $APP_HOME/docs/ $APP_HOME/docs
 COPY --from=builder $APP_HOME/data/ $APP_HOME/data
 COPY --from=builder $APP_HOME/.env/ $APP_HOME/.env
 COPY --from=builder $APP_HOME/dist/ $APP_HOME/dist
