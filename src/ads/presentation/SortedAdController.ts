@@ -19,9 +19,12 @@ export class SortedAdController implements IBaseController {
         await this._queryRepository.execute();
       res.status(httpStatus.OK).send({ response: responseList });
     } catch (error) {
-      log.error("Error obteniendo listado", {
-        message: error.message,
-      });
+      log.error(
+        "Error obteniendo listado (asegúrese de haber realizado los cálculos)",
+        {
+          message: error.message,
+        },
+      );
       res.status(httpStatus.BAD_REQUEST).send(error);
     }
   };

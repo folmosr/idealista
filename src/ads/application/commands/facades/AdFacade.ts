@@ -55,7 +55,9 @@ export class AdFacade implements IAdFacade {
           item.houseSize,
           score,
           item.gardenSize,
-          score <= 0 ? new Date() : undefined,
+          score <= Number.parseInt(process.env.RELEVANT_AD_POINTS as string, 10)
+            ? new Date()
+            : undefined,
         ),
       ];
       index++;

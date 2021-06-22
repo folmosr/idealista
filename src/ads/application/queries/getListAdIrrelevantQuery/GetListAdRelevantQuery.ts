@@ -1,9 +1,9 @@
 import { Ad } from '../../../domain/Ad';
 import { IAdRepository } from '../../interfaces/persistence/IAdRepository';
 import { IAdListModel } from '../model/IAdListModel';
-import { IGetListAdRelevantQuery } from './IGetListAdRelevantQuery';
+import { IGetListAdIrrelevantQuery } from './IGetListAdIrrelevantQuery';
 
-export class GetListAdRelevantQuery implements IGetListAdRelevantQuery {
+export class GetListAdIrrelevantQuery implements IGetListAdIrrelevantQuery {
   private _repository: IAdRepository;
   constructor(repository: IAdRepository) {
     this._repository = repository;
@@ -14,7 +14,7 @@ export class GetListAdRelevantQuery implements IGetListAdRelevantQuery {
     return ads
       .filter(
         (item) =>
-          item.score >
+          item.score <
           Number.parseInt(process.env.RELEVANT_AD_POINTS as string, 10),
       )
       .map((doc: Ad) => {

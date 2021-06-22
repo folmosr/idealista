@@ -2,15 +2,15 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import {
-    IGetListAdRelevantQuery
-} from '../../ads/application/queries/getListAdRelevantQuery/IGetListAdRelevantQuery';
+    IGetListAdIrrelevantQuery
+} from '../../ads/application/queries/getListAdIrrelevantQuery/IGetListAdIrrelevantQuery';
 import { IBaseController } from '../../shared/infrastructure/controllers/IBaseController';
 import { IAdListModel } from '../application/queries/model/IAdListModel';
 
-export class RelevantAdController implements IBaseController {
-  private _queryRepository: IGetListAdRelevantQuery;
+export class IrrelevantAdController implements IBaseController {
+  private _queryRepository: IGetListAdIrrelevantQuery;
 
-  constructor(queryRepository: IGetListAdRelevantQuery) {
+  constructor(queryRepository: IGetListAdIrrelevantQuery) {
     this._queryRepository = queryRepository;
   }
   run = async (req: Request, res: Response): Promise<void> => {
