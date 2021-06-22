@@ -11,6 +11,15 @@ export class AdRepository extends Repository<Ad> implements IAdRepository {
   }
 
   /**
+   * Obtiene listado de Ad desde un archivo
+   */
+  getAllFromFile(): Promise<Ad[]> {
+    const fileContents = fs.readFileSync(`./data/ads.json`, "utf-8");
+    const elements: Ad[] = <Ad[]>(<unknown>JSON.parse(fileContents));
+    return Promise.resolve(elements);
+  }
+
+  /**
    * Save processed data to a file
    *
    */

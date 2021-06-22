@@ -3,4 +3,5 @@ import { Ad } from '../../../domain/Ad';
 
 export interface IAdRepository extends IRepository<Ad> {
   saveToFile(docs: Readonly<Ad[]>): Promise<void>;
+  getAllFromFile(): Promise<Ad[]>;
 }

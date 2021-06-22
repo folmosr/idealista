@@ -1,6 +1,6 @@
-import { Ad } from '../../domain/Ad';
-import { IAdRepository } from '../interfaces/persistence/IAdRepository';
-import { IAdListModel } from './IAdListModel';
+import { Ad } from '../../../domain/Ad';
+import { IAdRepository } from '../../interfaces/persistence/IAdRepository';
+import { IAdListModel } from '../model/IAdListModel';
 import { IGetListAdQuery } from './IGetListAdQuery';
 
 export class GetListAdQuery implements IGetListAdQuery {

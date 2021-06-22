@@ -1,7 +1,7 @@
 import { Ad } from '../../../domain/Ad';
 import { IAdService } from '../../../domain/service/IAdService';
 import { IAdRepository } from '../../interfaces/persistence/IAdRepository';
-import { IGetListAdQuery } from '../../queries/IGetListAdQuery';
+import { IGetListAdQuery } from '../../queries/getListAdQuery/IGetListAdQuery';
 import { IAdFactory } from '../factory/IAdFactory';
 import { IAdFacade } from './IAdFacade';
 

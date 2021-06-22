@@ -1,6 +1,6 @@
-import { IPictureModel } from '../../../application/queries/IPictureModel';
 import { Ad } from '../../../domain/Ad';
 import { Picture } from '../../../domain/Picture';
+import { IPictureModel } from '../../queries/model/IPictureModel';
 import { IAdFactory } from './IAdFactory';
 
 export class AdFactory implements IAdFactory {

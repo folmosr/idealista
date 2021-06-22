@@ -1,6 +1,6 @@
 import { Console } from 'console';
 
-import { IPictureModel } from '../../application/queries/IPictureModel';
+import { IPictureModel } from '../../application/queries/model/IPictureModel';
 import { AdTypeEnum } from '../enums/AdTypeEnum';
 import { wordCounter } from '../util/functions';
 import { IAdService } from './IAdService';

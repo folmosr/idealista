@@ -1,5 +1,5 @@
-import { IPictureModel } from '../../../application/queries/IPictureModel';
 import { Ad } from '../../../domain/Ad';
+import { IPictureModel } from '../../queries/model/IPictureModel';
 
 export interface IAdFactory {
   CreateAd(

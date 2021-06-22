@@ -1,4 +1,4 @@
-import { IPictureModel } from '../../../ads/application/queries/IPictureModel';
+import { IPictureModel } from '../../application/queries/model/IPictureModel';
 
 export interface IAdService {
   /**
