@@ -17,11 +17,18 @@ import {
 import {
     IGetListAdRelevantQuery
 } from '../../../../../ads/application/queries/getListAdRelevantQuery/IGetListAdRelevantQuery';
+import {
+    GetListSortedAdQuery
+} from '../../../../../ads/application/queries/getListSortedQuery/GetListSortedAdQuery';
+import {
+    IGetListSortedAdQuery
+} from '../../../../../ads/application/queries/getListSortedQuery/IGetListSortedAdQuery';
 import { AdService } from '../../../../../ads/domain/service/AdService';
 import { IAdService } from '../../../../../ads/domain/service/IAdService';
 import { AdRepository } from '../../../../../ads/persistence/AdRepository';
 import { AdCalcullationController } from '../../../../../ads/presentation/AdCalculationController';
 import { RelevantAdController } from '../../../../../ads/presentation/RelevantAdController';
+import { SortedAdController } from '../../../../../ads/presentation/SortedAdController';
 import { VersionHealth } from '../../../../../version';
 
 export class Routes {
@@ -38,6 +45,8 @@ export class Routes {
   );
   private readonly _getListRelevantAdsQuery: IGetListAdRelevantQuery =
     new GetListAdRelevantQuery(this._respository);
+  private readonly _getListSortedAdsQuery: IGetListSortedAdQuery =
+    new GetListSortedAdQuery(this._respository);
   //#endregion
 
   //#region others
@@ -54,6 +63,7 @@ export class Routes {
   //#region  controllers
   private readonly _adCalculationController: AdCalcullationController;
   private readonly _relevantAdController: RelevantAdController;
+  private readonly _sortedAdController: SortedAdController;
   //#endregion
 
   constructor() {
@@ -65,12 +75,16 @@ export class Routes {
     this._relevantAdController = new RelevantAdController(
       this._getListRelevantAdsQuery,
     );
+    this._sortedAdController = new SortedAdController(
+      this._getListSortedAdsQuery,
+    );
   }
 
   public routes(): Router {
     this.router.get("/version", this.versionHealth.run);
     this.router.get("/calculation", this._adCalculationController.run);
     this.router.get("/relevants", this._relevantAdController.run);
+    this.router.get("/sorted", this._sortedAdController.run);
     return this.router;
   }
 }

@@ -16,7 +16,7 @@ export class AdCalcullationController implements IBaseController {
       await this._adFacade.doCalculation();
       res.status(httpStatus.OK).send({ response: `Ok` });
     } catch (error) {
-      log.error("Error crenaod archivo de cálculos", {
+      log.error("Error creando archivo de cálculos", {
         message: error.message,
       });
       res.status(httpStatus.BAD_REQUEST).send(error);

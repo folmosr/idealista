@@ -1,9 +1,9 @@
 import { Ad } from '../../../domain/Ad';
 import { IAdRepository } from '../../interfaces/persistence/IAdRepository';
 import { IAdListModel } from '../model/IAdListModel';
-import { IGetListAdRelevantQuery } from './IGetListAdRelevantQuery';
+import { IGetListSortedAdQuery } from './IGetListSortedAdQuery';
 
-export class GetListAdRelevantQuery implements IGetListAdRelevantQuery {
+export class GetListSortedAdQuery implements IGetListSortedAdQuery {
   private _repository: IAdRepository;
   constructor(repository: IAdRepository) {
     this._repository = repository;
@@ -12,7 +12,15 @@ export class GetListAdRelevantQuery implements IGetListAdRelevantQuery {
   async execute(): Promise<readonly IAdListModel[]> {
     const ads = await this._repository.getAllFromFile();
     return ads
-      .filter((item) => item.score > 40)
+      .sort((a, b) => {
+        if (a.score > b.score) {
+          return -1;
+        }
+        if (a.score > b.score) {
+          return 1;
+        }
+        return 0;
+      })
       .map((doc: Ad) => {
         const model: IAdListModel = {
           description: doc.description,
