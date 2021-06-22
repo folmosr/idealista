@@ -1,9 +1,8 @@
-import { IAdFacade } from 'ads/application/facades/IAdFacade';
+import { IAdFacade } from 'ads/application/commands/facades/IAdFacade';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { IBaseController } from '../../shared/infrastructure/controllers/IBaseController';
-import { IGetListAdQuery } from '../application/queries/IGetListAdQuery';
 
 export class AdCalcullationController implements IBaseController {
   private readonly _adFacade: IAdFacade;
@@ -17,7 +16,7 @@ export class AdCalcullationController implements IBaseController {
       await this._adFacade.doCalculation();
       res.status(httpStatus.OK).send({ response: `Ok` });
     } catch (error) {
-      log.error('Error crenaod archivo de cálculos', {
+      log.error("Error crenaod archivo de cálculos", {
         message: error.message,
       });
       res.status(httpStatus.BAD_REQUEST).send(error);

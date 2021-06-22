@@ -1,3 +1,6 @@
+import { json } from 'body-parser';
+import fs from 'fs';
+
 import { Repository } from '../../shared/persistence/Repository';
 import { IAdRepository } from '../application/interfaces/persistence/IAdRepository';
 import { Ad } from '../domain/Ad';
@@ -11,7 +14,9 @@ export class AdRepository extends Repository<Ad> implements IAdRepository {
    * Save processed data to a file
    *
    */
-  async saveToFile(docs: readonly Ad[]): Promise<void> {}
+  async saveToFile(docs: readonly Ad[]): Promise<void> {
+    return fs.writeFileSync("./data/ads.json", JSON.stringify(docs));
+  }
 
   /**
    * get all Ads from memory

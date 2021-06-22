@@ -35,7 +35,6 @@ export class AdService implements IAdService {
   inspectDescription(description: string, type: string): number {
     const wordsCount = wordCounter(description ?? "");
     const keyWords = (process.env.KEY_WORDS as string).split(",");
-    let counted: string[] = [];
 
     if (!(wordsCount.count > 0)) {
       return 0;
@@ -49,7 +48,7 @@ export class AdService implements IAdService {
     );
 
     /**
-     * checking tipology
+     * checking typology
      */
     if (type == AdTypeEnum.FLAT) {
       if (wordsCount.count >= 20 && wordsCount.count <= 49) {
@@ -78,8 +77,7 @@ export class AdService implements IAdService {
      */
     wordsCount.words.forEach((element) => {
       let upper = element.toUpperCase();
-      if (keyWords.includes(upper) && !counted.includes(upper)) {
-        counted = [...counted, upper];
+      if (keyWords.includes(upper)) {
         result += Number.parseInt(
           process.env.INCLUDE_KEYWORD_POINTS as string,
           10,

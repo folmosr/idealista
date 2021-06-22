@@ -1,7 +1,9 @@
 import { Router } from 'express';
 
-import { AdFacade } from '../../../../../ads/application/facades/AdFacade';
-import { IAdFacade } from '../../../../../ads/application/facades/IAdFacade';
+import { AdFacade } from '../../../../../ads/application/commands/facades/AdFacade';
+import { IAdFacade } from '../../../../../ads/application/commands/facades/IAdFacade';
+import { AdFactory } from '../../../../../ads/application/commands/factory/AdFactory';
+import { IAdFactory } from '../../../../../ads/application/commands/factory/IAdFactory';
 import { IAdRepository } from '../../../../../ads/application/interfaces/persistence/IAdRepository';
 import { GetListAdQuery } from '../../../../../ads/application/queries/GetListAdQuery';
 import { IGetListAdQuery } from '../../../../../ads/application/queries/IGetListAdQuery';
@@ -22,11 +24,14 @@ export class Routes {
   private readonly _getListAdsQuery: IGetListAdQuery = new GetListAdQuery(
     this._respository,
   );
+  private readonly _adFactory: IAdFactory = new AdFactory();
   private readonly _adService: IAdService = new AdService();
   private readonly _adCalculationController: AdCalcullationController;
   private readonly _adFacade: IAdFacade = new AdFacade(
     this._getListAdsQuery,
     this._adService,
+    this._respository,
+    this._adFactory,
   );
 
   constructor() {
@@ -38,8 +43,8 @@ export class Routes {
   }
 
   public routes(): Router {
-    this.router.get('/version', this.versionHealth.run);
-    this.router.get('/calculation', this._adCalculationController.run);
+    this.router.get("/version", this.versionHealth.run);
+    this.router.get("/calculation", this._adCalculationController.run);
     return this.router;
   }
 }

@@ -1,7 +1,7 @@
 import { IWordResult } from './interfaces/IWordReslt';
 
 function isWord(str: string): boolean {
-  var alphaNumericFound = false;
+  let alphaNumericFound = false;
   for (let i = 0; i < str.length; i++) {
     let code = str.charCodeAt(i);
     if (
@@ -17,16 +17,18 @@ function isWord(str: string): boolean {
 }
 
 export function wordCounter(text: string): IWordResult {
-  var wordsArray = text.split(" ");
-  var wordCount = 0;
+  const wordsArray = text.split(" ");
+  let realWords: string[] = [];
+  let wordCount = 0;
   for (let i = 0; i < wordsArray.length; i++) {
     let word = wordsArray[i];
     if (word !== " " && isWord(word)) {
       wordCount++;
+      realWords = [...realWords, word];
     }
   }
   return {
-    words: wordsArray,
+    words: realWords,
     count: wordCount,
   } as IWordResult;
 }
